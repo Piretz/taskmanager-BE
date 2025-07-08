@@ -2,6 +2,7 @@
   "name": "taskmanagement-backend",
   "private": true,
   "scripts": {
+
     "build": "react-router build",
     "dev": "react-router dev",
     "start": "react-router-serve ./build/server/index.js",

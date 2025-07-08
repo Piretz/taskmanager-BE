@@ -6,7 +6,7 @@ exports.getTasks = async (req, res) => {
 };
 
 exports.createTask = async (req, res) => {
-  const task = await Task.create(req.body);
+  const task = await Task.create(req.body); 
   res.json(task);
 };
 
