@@ -1,16 +1,20 @@
 {
   "name": "taskmanagement-backend",
+  "type": "module",
   "private": true,
   "scripts": {
-
-    "build": "react-router build",
-    "dev": "react-router dev",
-    "start": "react-router-serve ./build/server/index.js",
+    "build": "vite build",
+    "dev": "vite",
+    "start": "node server.js",
+    "react-build": "react-router build",
+    "react-dev": "react-router dev",
+    "react-start": "react-router-serve ./build/server/index.js",
     "typecheck": "react-router typegen && tsc"
   },
   "dependencies": {
     "@react-router/node": "^7.5.3",
     "@react-router/serve": "^7.5.3",
+    "autoprefixer": "^10.4.21",
     "bcryptjs": "^3.0.2",
     "cors": "^2.8.5",
     "dotenv": "^17.0.1",
@@ -18,17 +22,20 @@
     "isbot": "^5.1.27",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.16.1",
+    "postcss": "^8.5.6",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "react-router": "^7.5.3"
+    "react-router": "^7.5.3",
+    "socket.io": "^4.8.1"
   },
   "devDependencies": {
     "@react-router/dev": "^7.5.3",
+    "@tailwindcss/postcss": "^4.1.11",
     "@tailwindcss/vite": "^4.1.4",
     "@types/node": "^20",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
-    "tailwindcss": "^4.1.4",
+    "tailwindcss": "^4.1.11",
     "typescript": "^5.8.3",
     "vite": "^6.3.3",
     "vite-tsconfig-paths": "^5.1.4"
