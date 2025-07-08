@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import User from '../models/User.js'; // Add `.js` if it's also an ES module
+import User from '../models/user.js'; // Add `.js` if it's also an ES module
 
 const router = Router();
 
