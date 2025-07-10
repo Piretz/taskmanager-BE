@@ -5,6 +5,9 @@ import User from '../models/user.js';
 
 const router = Router();
 
+// ✅ Helper: Use fallback secret in dev (DO NOT use in prod!)
+const JWT_SECRET = process.env.JWT_SECRET || 'fallback_jwt_secret_for_dev';
+
 // ✅ REGISTER
 router.post('/register', async (req, res) => {
   try {
@@ -26,12 +29,12 @@ router.post('/register', async (req, res) => {
       },
     });
   } catch (err) {
-    console.error(err);
+    console.error('❌ Register Error:', err.message);
     res.status(500).json({ msg: 'Server error' });
   }
 });
 
-// ✅ LOGIN (same format as register)
+// ✅ LOGIN
 router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -48,7 +51,7 @@ router.post('/login', async (req, res) => {
 
     const token = jwt.sign(
       { id: user._id, email: user.email },
-      process.env.JWT_SECRET,
+      JWT_SECRET,
       { expiresIn: '2h' }
     );
 
@@ -61,7 +64,7 @@ router.post('/login', async (req, res) => {
       },
     });
   } catch (err) {
-    console.error(err);
+    console.error('❌ Login Error:', err.message);
     res.status(500).json({ msg: 'Server error' });
   }
 });
