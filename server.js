@@ -2,6 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import rateLimit from 'express-rate-limit'; // ✅ NEW
 import authRoutes from './routes/authroutes.js';
 
 // Load environment variables
@@ -18,6 +19,14 @@ app.use(cors({
 }));
 
 app.use(express.json());
+
+// ✅ Rate Limiting Middleware
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // limit each IP to 100 requests per windowMs
+  message: 'Too many requests, please try again later.',
+});
+app.use(limiter); // ✅ Apply globally
 
 // ✅ Routes
 app.use('/api/auth', authRoutes);
