@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import User from '../models/user.js'; // Add `.js` if it's also an ES module
+import User from '../models/user.js';
 
 const router = Router();
 
@@ -18,14 +18,20 @@ router.post('/register', async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = await User.create({ name, email, password: hashedPassword });
 
-    res.status(201).json({ msg: 'User registered', user: newUser });
+    res.status(201).json({
+      msg: 'User registered',
+      user: {
+        fullname: newUser.name,
+        email: newUser.email,
+      },
+    });
   } catch (err) {
     console.error(err);
     res.status(500).json({ msg: 'Server error' });
   }
 });
 
-// ✅ LOGIN
+// ✅ LOGIN (same format as register)
 router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -46,7 +52,14 @@ router.post('/login', async (req, res) => {
       { expiresIn: '2h' }
     );
 
-    res.json({ msg: 'Login successful', token });
+    res.json({
+      msg: 'Login successful',
+      token,
+      user: {
+        fullname: user.name,
+        email: user.email,
+      },
+    });
   } catch (err) {
     console.error(err);
     res.status(500).json({ msg: 'Server error' });
