@@ -7,20 +7,24 @@ import authRoutes from './routes/authroutes.js';
 dotenv.config();
 
 const app = express();
+const PORT = process.env.PORT || 5000;
 
-// ✅ Enable CORS for frontend (adjust domain in prod)
-app.use(cors({ origin: 'http://localhost:3000' }));
+// ✅ CORS setup for both dev and prod
+const allowedOrigins = [process.env.CLIENT_URL || 'http://localhost:3000'];
+app.use(cors({
+  origin: allowedOrigins,
+  credentials: true
+}));
 
-// Middleware
 app.use(express.json());
 
 // Routes
 app.use('/api/auth', authRoutes);
 
-// MongoDB Connection
+// DB Connect & Server Start
 mongoose.connect(process.env.MONGO_URI)
   .then(() => {
     console.log('✅ Connected to MongoDB');
-    app.listen(5000, () => console.log('🚀 Server running on http://localhost:5000'));
+    app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
   })
   .catch(err => console.error('❌ MongoDB connection error:', err));
